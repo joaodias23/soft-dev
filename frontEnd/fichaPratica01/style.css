@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    display: flex;
+    flex-direction: column;
+    font-family: "VT323", monospace;
+}
+
+#nameTitle {
+    background-image: url("./cubic-pixel-game-level-background-frame-vector.jpg");
+    width: 100%;
+    background-attachment: fixed; 
+    background-size: 100% 100%;
+    background-position: bottom center;
+}
+
+#myName {
+    display: flex;
+    justify-content: center;
+    padding: 100px;
+    font-size: 80px;
+    color: white;
+}
