@@ -6,15 +6,68 @@
 html, body {
     display: flex;
     flex-direction: column;
-    font-family: "VT323", monospace;
+    font-family: "Lato", sans-serif;
+    background-color: #0C0C0C;
+    color: white;
+}
+
+/* navbar */
+nav {
+    background-color: #131313;
+    height: 100px;
+    display: flex;
+}
+
+#logo {
+    width: 70px;
+    height: 60px;
+    margin-top: 18px;
+    margin-left: 40px;
+    font-family: "Shadows Into Light", cursive;
+}
+
+#leftnav {
+    margin-top: 40px;
+    margin-left: auto;
+    margin-right: 80px;
+}
+
+#links {
+    color: white;
+    text-decoration: none;
+}
+
+.fa-brands {
+
+}
+
+#linkLogo {
+
+}
+
+#gitLogo {
+    margin-left: 25px;
+}
+
+i {
+    gap: 20px;
+}
+/* navbar */
+
+/* main part */
+#mainPart {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#left {
+    display: flex;
+    flex-direction: column;
 }
 
 #nameTitle {
-    background-image: url("./cubic-pixel-game-level-background-frame-vector.jpg");
-    width: 100%;
-    background-attachment: fixed; 
-    background-size: 100% 100%;
-    background-position: bottom center;
+    width: 100px;
 }
 
 #myName {
@@ -22,5 +75,41 @@ html, body {
     justify-content: center;
     padding: 100px;
     font-size: 80px;
-    color: white;
+}
+
+#bioText {
+    width: 500px;
+}
+
+figure {
+    margin-top: 100px;
+    margin-left: 50px;
+}
+/* main part */
+
+#firstHR {
+    display: block;
+    margin-left: 400px;
+    margin-right: 400px;
+    border-style: inset;
+    border-width: 1px;
+    border-color:#500073;
+}
+
+#secondHR {
+    display: block;
+    margin-top: 80px;
+    margin-bottom: 0.5em;
+    margin-left: 400px;
+    margin-right: 400px;
+    border-style: inset;
+    border-width: 1px;
+    border-color:#500073;
+}
+
+/* footer */
+#footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
 }
