@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
 
+    <!-- Google Font Imports -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=VT323&display=swap" rel="stylesheet">
@@ -12,73 +14,129 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <!-- Google Font Imports -->
 
+    <!-- Font Awesome Icon Import -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Font Awesome Icon Import -->
 
+    <!-- Background Particles Import -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="./script.js" defer></script>
+    <!-- Background Particles Import -->
+
+    <!-- Page Title -->
     <title>João Dias</title>
+    <!-- Page Title -->
+
 </head>
+
 <body>
-    <nav>
+
+    <!-- Particles -->
+    <div id="particles-js"></div>
+    <!-- Particles -->
+
+    <!-- Navbar: Logo + Navigation Links + HR -->
+    <nav id="navBar">
         <h1 id="logo">JD</h1>
         <div id="leftnav">
-            <a id="links" href="https://pt.linkedin.com/"><i id="linkedLogo" class="fa-brands fa-square-linkedin"></i>LinkedIn</a>
-            <a id="links" href="https://www.github.com/"><i id="gitLogo" class="fa-brands fa-square-github"></i>GitHub</a>
+            <a href="#profileSection">Profile</a>
+            <a href="#skillSection">Stack</a>
+            <a href="#projectsSection">Projects</a>
+            <a href="#contactSection">Contact</a>
         </div>
     </nav>
     <hr id="firstHR">
-    <!-- Header to place the name -->
-    <section>
-        <div id="mainPart">
-            <div id="left">
-                <header>
-                    <div id="nameTitle">
-                        <h1 id="myName">JOÃO DIAS</h1>
-                    </div>
-                </header>
-                <!-- Main to highlight the main content of the page -->
-                <main>
-                    <div id="bioText">
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores adipisci, 
-                        explicabo reiciendis dicta rem vitae voluptatem architecto, 
-                        quis facilis ab autem quisquam sunt voluptatum molestiae repudiandae blanditiis 
-                        accusantium ipsam necessitatibus?</p>
-                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores adipisci, 
-                        explicabo reiciendis dicta rem vitae voluptatem architecto, 
-                        quis facilis ab autem quisquam sunt voluptatum molestiae repudiandae blanditiis 
-                        accusantium ipsam necessitatibus?</p>
-                    </div>
-                </main>
-            </div>
-            <figure>
-                <img style="width: 450px; height: 506px; object-fit: cover; object-position: 100% 0; box-shadow: 12px 12px 2px 1px #500073; " src="./7K0A1570.jpg" alt="Me">
-            </figure>
-        </div>
-    </section>
-    <hr id="secondHR">
-    <!-- Section for the list of skills -->
-        <!--  -->
-    <section>
+    <!-- Navbar: Logo + Navigation Links + HR -->
 
-    </section>
-    <!-- Contact Me Section -->
-    <section>
-       
-    </section>
-    
-    <p></p>
-    <!-- Table for professional history -->
-    <section>
-       
-    </section>
-    <!-- Copyright Footer -->
-    <footer><div id="footer">&copy; 2025 João Dias - All Rights Reserved.</div></footer>
+    <!-- Full Page Wrapper Div -->
+    <div id="contentWrapper">
+        
+        <!-- Profile Section -->
+        <section id="profileSection">
+            <div id="mainPart">
+                <div id="left">
+                    <header>
+                        <div id="nameTitle">
+                            <h1 id="myName">Hello,<br>My name is João Dias</h1>
+                        </div>
+                    </header>
+                    <main>
+                        <div id="bioText">
+                            <p>I’m a software developer in training passionate about creating efficient and intuitive digital experiences. 
+                                I enjoy transforming ideas into clean, maintainable code that feels seamless to use.</p>
+                            <p>My approach centers on clarity, performance, and thoughtful design, building solutions that are simple in 
+                                appearance but powerful in execution.</p>
+                        </div>
+                    </main>
+                </div>
+                <figure>
+                    <div class="imgWrapper">
+                        <img src="./7K0A1570.jpg" alt="Me">
+                    </div>
+                </figure>
+            </div>
+        </section>
+        <!-- Profile Section -->
+
+        <!-- Tech Stack Section -->
+        <section id="skillSection">
+            <h2 class="section-title">Tech Stack</h2>
+            <div class="skills-grid">
+                <div class="skill-box">HTML</div>
+                <div class="skill-box">CSS</div>
+                <div class="skill-box">JavaScript</div>
+                <div class="skill-box">C</div>
+                <div class="skill-box">Python</div>
+                <div class="skill-box">Java</div>
+                <div class="skill-box">SQL/NO-SQL</div>
+                <div class="skill-box">React</div>
+                <div class="skill-box">Node.js</div>
+                <div class="skill-box">Flask</div>
+                <div class="skill-box">Git</div>
+                <div class="skill-box">Linux / CLI</div>
+            </div>
+        </section>
+        <!-- Tech Stack Section -->
+
+        <!-- Projects Section -->
+        <section id="projectsSection">
+            <h2 class="section-title">Projects</h2>
+            <p class="contact-text">
+                    These are my open source projects which are fetched directly from Github.
+                </p>
+            <div class="projects-grid" id="projectsGrid">
+            </div>
+        </section>
+        <!-- Projects Section -->
+
+        <!-- Contact Section -->
+        <section id="contactSection">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-content">
+                <p class="contact-text">
+                    I’m open to new opportunities and collaborations. Feel free to reach out.
+                </p>
+                <a class="contact-email" href="mailto:joaocfdias17@gmail.com">joaocfdias17@gmail.com</a>
+                <div class="contact-icons">
+                    <a href="https://linkedin.com" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+                    <a href="https://github.com" target="_blank"><i class="fa-brands fa-github"></i></a>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Section -->
+
+    </div>
+    <!-- Full Page Wrapper Div -->
+
+    <!-- Footer -->
+    <footer>
+        <div id="footer">&copy; 2025 João Dias - All Rights Reserved.</div>
+    </footer>
+    <!-- Footer -->
 
 </body>
 </html>
-
-<!-- Skills: -->
-<!-- Core Web Skills: HTML, CSS, JavaScript, React, Node.js -->
-<!-- Programming Languages: C, Python, Flask (Python), SQL -->
-<!-- Tools & Environment: Linux/CLI, Git/GitHub, VSCode, Virtualbox/Ubuntu -->

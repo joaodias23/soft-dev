@@ -1,115 +1,82 @@
-* {
-    margin: 0;
-    padding: 0;
-}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ GENERAL ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+* {margin: 0; padding: 0; box-sizing: border-box;}
+html, body {font-family: "Lato", sans-serif; background-color: #181818; color: white; min-height: 100vh; overflow: hidden;}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ GENERAL ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-html, body {
-    display: flex;
-    flex-direction: column;
-    font-family: "Lato", sans-serif;
-    background-color: #0C0C0C;
-    color: white;
-}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ PARTICLES ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+#particles-js {position: fixed; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; z-index: 0;}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ PARTICLES ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-/* navbar */
-nav {
-    background-color: #131313;
-    height: 100px;
-    display: flex;
-}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ NAVBAR ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+nav {background-color: #181818; height: 100px; display: flex; align-items: center; justify-content: space-between; padding: 0 80px;
+    z-index: 5; position: relative;}
+#logo {font-family: "Shadows Into Light", cursive; font-size: 36px;}
+#leftnav a {color: #d6d6d6; text-decoration: none; margin-left: 25px; font-size: 18px; position: relative; transition: none;}
+#leftnav a i { margin-right: 8px; color: #716080;}
+#leftnav a.activeLink {color: white; font-size: 18px;}
+#leftnav a.activeLink::after {content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 3px; 
+  background-color: #716080; border-radius: 2px;}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ NAVBAR ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-#logo {
-    width: 70px;
-    height: 60px;
-    margin-top: 18px;
-    margin-left: 40px;
-    font-family: "Shadows Into Light", cursive;
-}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ CONTENT WRAPPER ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+#contentWrapper {position: relative; width: 100%; height: 100vh;}
+#contentWrapper > section {position: absolute; top: 0; left: 50%; transform: translate(-50%, 0); width: 100%; max-width: 1100px;
+    height: 100vh; opacity: 0; display: flex; flex-direction: column; align-items: center; z-index: 0;}
+#contentWrapper > section.active {opacity: 1; transform: translate(-50%, 0); z-index: 1;}
+#contentWrapper > section.exitUp { opacity: 0; transform: translate(-50%, 0);}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ CONTENT WRAPPER ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-#leftnav {
-    margin-top: 40px;
-    margin-left: auto;
-    margin-right: 80px;
-}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ PROFILE SECTION ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+#mainPart {display: flex; align-items: center; justify-content: center; gap: 80px; padding: 80px 0;
+    transform: translateX(-15px) translateY(-90px); margin: auto 0;}
+#left {display: flex; flex-direction: column; justify-content: center; max-width: 480px;}
+#myName {font-size: 25px; margin-bottom: 30px; text-align: left;}
+#bioText p {margin-bottom: 18px; line-height: 1.6; font-weight: 300; color: #d6d6d6;}
+.imgWrapper {display: inline-block; overflow: hidden; box-shadow: 100px 100px 0px -15px #716080;}
+figure {margin: 0;}
+figure img {width: 400px; height: 400px; object-fit: cover; object-position: 50% 55%; transform: scale(1.1);
+    transform-origin: 90% center;}
+#firstHR {display: block; margin: 0 auto; width: 65%; border: none; border-top: 1px solid #716080;}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ PROFILE SECTION ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-#links {
-    color: white;
-    text-decoration: none;
-}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ TECH STACK SECTION ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+#skillSection {margin-top: 10px;}
+.section-title {font-size: 30px; margin-top: 105px; margin-bottom: 60px;}
+.skills-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 30px; width: fit-content; margin: 0 auto;
+    max-width: 1000px; justify-items: center;}
+.skill-box {background-color: #222; color: #fff; border: 1px solid #333; box-shadow: 8px 8px 0px 0px #716080; padding: 20px 0;
+    width: 100%; text-align: center; font-size: 18px; font-weight: 400; transition: all 0.3s ease;}
+.skill-box:hover {transform: translateY(-6px); box-shadow: 14px 14px 0px 0px #716080; color: #d6d6d6;}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ TECH STACK SECTION ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-.fa-brands {
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ PROJECTS SECTION ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+.projects-grid {display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; width: 90%;
+    margin: 0 auto 80px auto;}
+.project-card {background-color: #181818; border: 1px solid #716080; padding: 16px; display: flex; flex-direction: column;
+    justify-content: space-between; height: 160px; transition: transform 0.2s ease, box-shadow 0.2s ease; color: #c9d1d9;
+    text-decoration: none;}
+.project-card:hover {transform: translateY(-6px);}
+.project-name {font-size: 16px; font-weight: 600; color: #58a6ff; margin-bottom: 8px; text-decoration: none;}
+.project-desc {font-size: 14px; color: #c9d1d9; margin-bottom: 12px; flex-grow: 1;}
+.project-meta {display: flex; align-items: center; gap: 12px; font-size: 12px; color: #8b949e;}
+.project-language {display: flex; align-items: center; gap: 6px; justify-self: flex-start;}
+.project-language .color-circle {width: 12px; height: 12px; border-radius: 50%; background-color: #f1e05a;}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ PROJECTS SECTION ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ CONTACT SECTION ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+#contactSection {margin-top: 50px;}
+#contact {padding: 120px 0; display: flex; flex-direction: column; align-items: center; text-align: center;}
+#contact .section-title {font-family: "Shadows Into Light", cursive; font-size: 36px; color: #d6d6d6; margin-bottom: 60px;}
+.contact-content {display: flex; flex-direction: column; align-items: center; justify-content: ce; width: fit-content;}
+.contact-text {color: #d6d6d6; font-weight: 300; max-width: 600px; margin-bottom: 20px; line-height: 1.6; text-align: center;}
+.contact-email {color: #fff; font-size: 20px; font-weight: 400; text-decoration: none; margin-bottom: 40px;
+    transition: color 0.3s ease;}
+.contact-email:hover {color: #716080;}
+.contact-icons {display: flex; gap: 30px;}
+.contact-icons a {color: #716080; font-size: 36px; transition: all 0.3s ease;}
+.contact-icons a:hover {color: #d6d6d6; transform: translateY(-4px);}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ CONTACT SECTION ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
 
-#linkLogo {
-
-}
-
-#gitLogo {
-    margin-left: 25px;
-}
-
-i {
-    gap: 20px;
-}
-/* navbar */
-
-/* main part */
-#mainPart {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-}
-
-#left {
-    display: flex;
-    flex-direction: column;
-}
-
-#nameTitle {
-    width: 100px;
-}
-
-#myName {
-    display: flex;
-    justify-content: center;
-    padding: 100px;
-    font-size: 80px;
-}
-
-#bioText {
-    width: 500px;
-}
-
-figure {
-    margin-top: 100px;
-    margin-left: 50px;
-}
-/* main part */
-
-#firstHR {
-    display: block;
-    margin-left: 400px;
-    margin-right: 400px;
-    border-style: inset;
-    border-width: 1px;
-    border-color:#500073;
-}
-
-#secondHR {
-    display: block;
-    margin-top: 80px;
-    margin-bottom: 0.5em;
-    margin-left: 400px;
-    margin-right: 400px;
-    border-style: inset;
-    border-width: 1px;
-    border-color:#500073;
-}
-
-/* footer */
-#footer {
-    display: flex;
-    justify-content: center;
-    margin-top: 100px;
-}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ FOOTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
+#footer {display: flex; justify-content: center; align-items: center; padding: 60px 0; font-size: 14px; color: #aaa;}
+/*++++++++++++++++++++++++++++++++++++++++++++++++++++++ FOOTER ++++++++++++++++++++++++++++++++++++++++++++++++++++++*/
