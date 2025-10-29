@@ -22,14 +22,107 @@ public class EX9 {
                     System.out.println(music[0]);
             };
         }
+
+        sc.close();
+
         return "All " + genre + " Songs";
     }
 
-    public static String artistSearch() {
-        return "2";
+    public static void artistSearch(String artist) throws FileNotFoundException{
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_09.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        String line = sc.nextLine();
+
+        System.out.println();
+
+        String [] uniqueArtistNames = new String [25];
+
+        int uniqueCount = 0;
+
+        while(sc.hasNextLine()) {
+
+            line = sc.nextLine();
+
+            String [] artistNames = line.split(",");
+
+            if (artistNames.length > 1) {
+                String currentArtist = artistNames[1].trim();
+
+                boolean exists = false;
+
+                for (int j = 0; j < uniqueCount; j++) {
+                    if (currentArtist.equalsIgnoreCase(uniqueArtistNames[j])) {
+                        exists = true;
+                        break;
+                    }
+                }
+
+                if (!exists && uniqueCount < uniqueArtistNames.length) {
+                    uniqueArtistNames[uniqueCount] = currentArtist;
+                    uniqueCount++;
+                }
+            }
+        }
+
+        for (int i = 0; i < uniqueArtistNames.length; i++) {
+            System.out.print(uniqueArtistNames[i] + " ");
+        }
+
+        System.out.println();
+        System.out.print("Input here: ");
+
+        String artistName = input.nextLine().trim();
+
+        sc = new Scanner(file);
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+
+        System.out.println();
+
+        System.out.println("Songs by " + artistName + ":");
+
+        while (sc.hasNextLine()) {
+            line = sc.nextLine();
+            String[] artistNames = line.split(",");
+
+            if (artistNames.length > 1) {
+                String currentArtist = artistNames[1].trim();
+
+                if (artistName.equalsIgnoreCase(currentArtist)) {
+                    System.out.println(artistNames[0]);
+                }
+            }
+        }
+
+        sc.close();
     }
 
-    public static String longestSong() {
+    public static String longestSong() throws FileNotFoundException{
+
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_09.csv");
+
+        Scanner sc = new Scanner(file);
+
+        double biggest = -1;
+        String name = "";
+        String artist = "";
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] lineItems = line.split(",");
+            double durble = Double.parseDouble(lineItems[3].trim());
+            if (durble > biggest) {
+                biggest = durble;
+                name = lineItems[0].trim();
+                artist = lineItems[1].trim();
+            }
+        }
+        System.out.println("Música com maior duração: " + name + " — " + artist + " [" + biggest + "]");
+
         return "3";
     }
 
@@ -69,8 +162,9 @@ public class EX9 {
                     System.out.println(musicSearch(genre));
                     break;
                 case 2:
-                    System.out.println("Selecione um artista: ");
-                    System.out.println(artistSearch());
+                    System.out.println();
+                    System.out.println("Lista de artistas: ");
+                    artistSearch("");
                     break;
                 case 3:
                     System.out.println(longestSong());
