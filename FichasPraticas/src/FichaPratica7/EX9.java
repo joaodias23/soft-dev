@@ -107,31 +107,77 @@ public class EX9 {
 
         Scanner sc = new Scanner(file);
 
-        double biggest = -1;
-        String name = "";
-        String artist = "";
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
 
-        while (sc.hasNextLine()) {
+        int biggest = 0;
+        String longestSongBand = "";
+        String longestSongTitle = "";
+
+        while(sc.hasNextLine()) {
             String line = sc.nextLine();
-            String[] lineItems = line.split(",");
-            double durble = Double.parseDouble(lineItems[3].trim());
-            if (durble > biggest) {
-                biggest = durble;
-                name = lineItems[0].trim();
-                artist = lineItems[1].trim();
+            String [] songLine = line.split(",");
+
+            String [] longerSong = songLine[3].split(":");
+            int minToSec = Integer.parseInt(longerSong[0]) * 60;
+            int totalDuration = Integer.parseInt(longerSong[1]) + minToSec;
+
+            if(totalDuration > biggest) {
+                biggest = totalDuration;
+                longestSongBand = songLine[1];
+                longestSongTitle = songLine[0];
             }
         }
-        System.out.println("Música com maior duração: " + name + " — " + artist + " [" + biggest + "]");
 
-        return "3";
+        System.out.println();
+
+        return "Longest Song is: " + longestSongTitle + " by " + longestSongBand;
     }
 
-    public static String durationSearch() {
-        return "4";
+    public static String durationSearch(int min, int sec) throws FileNotFoundException{
+
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_09.csv");
+
+        Scanner sc = new Scanner(file);
+
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+
+        while(sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String [] songLine = line.split(",");
+
+            String [] song = songLine[3].split(":");
+            int minToSec = Integer.parseInt(song[0]);
+            int totalDuration = Integer.parseInt(song[1]);
+
+            if (minToSec >= min && totalDuration >= sec) {
+                System.out.println(line);
+            }
+        }
+
+        return "";
     }
 
-    public static String songsNumber() {
-        return "5";
+    public static int songsNumber() throws FileNotFoundException{
+
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_09.csv");
+
+        Scanner sc = new Scanner(file);
+
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+
+        int counter = 0;
+
+        while(sc.hasNextLine()){
+            sc.nextLine();
+            counter++;
+        }
+        return counter;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -170,10 +216,15 @@ public class EX9 {
                     System.out.println(longestSong());
                     break;
                 case 4:
-                    System.out.println(durationSearch());
+                    System.out.println();
+                    System.out.print("Minutos:  ");
+                    int min = input.nextInt();
+                    System.out.print("Segundos:  ");
+                    int sec = input.nextInt();
+                    System.out.println(durationSearch(min, sec));
                     break;
                 case 5:
-                    System.out.println(songsNumber());
+                    System.out.println(songsNumber() + " musicas no ficheiro.");
                     break;
                 default:
                     System.out.println("bruh");
