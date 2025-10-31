@@ -8,7 +8,7 @@ public class EX10 {
 
     public static void printAll() throws FileNotFoundException {
 
-        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
 
@@ -25,7 +25,7 @@ public class EX10 {
 
     public static void studentDataNo() throws FileNotFoundException {
 
-        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
         Scanner input = new Scanner(System.in);
@@ -55,7 +55,7 @@ public class EX10 {
 
     public static void courseData() throws FileNotFoundException {
 
-        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
         Scanner input = new Scanner(System.in);
@@ -87,7 +87,7 @@ public class EX10 {
 
     public static void printOldest() throws FileNotFoundException{
 
-        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
 
@@ -110,6 +110,81 @@ public class EX10 {
 
         System.out.println();
         System.out.println("Oldest: " + oldestName + " Age: " + oldest);
+    }
+
+    public static void moreCourses() throws FileNotFoundException{
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+
+        Scanner sc = new Scanner(file);
+
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+
+        String[] studentNames = new String[100];
+        int[] courseCount = new int[100];
+        int size = 0;
+
+        while(sc.hasNextLine()){
+            String line = sc.nextLine();
+            String [] names = line.split(",");
+
+            String name = names[0];
+
+            boolean found = false;
+
+            for (int i = 0; i < size; i++) {
+                if (studentNames[i].equalsIgnoreCase(name)) {
+                    courseCount[i]++;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                studentNames[size] = name;
+                courseCount[size] = 1;
+                size++;
+            }
+        }
+
+        sc.close();
+
+        System.out.println();
+        System.out.println("Alunos inscritos em mais de um curso:");
+        boolean anyFound = false;
+
+        for (int i = 0; i < size; i++) {
+            if (courseCount[i] > 1) {
+                System.out.println("- " + studentNames[i] + " (" + courseCount[i] + " cursos)");
+                anyFound = true;
+            }
+        }
+
+        if (!anyFound) {
+            System.out.println("Nenhum aluno está inscrito em mais de um curso.");
+        }
+    }
+
+    public static void totalNum() throws FileNotFoundException{
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+
+        Scanner sc = new Scanner(file);
+
+        if (sc.hasNextLine()) {
+            sc.nextLine();
+        }
+
+        int counter = 0;
+
+        while(sc.hasNextLine()){
+            sc.nextLine();
+            counter++;
+        }
+
+        System.out.println("Formandos: " + counter);
+        System.out.print("With Duplicates: ");
+        moreCourses();
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -135,10 +210,10 @@ public class EX10 {
                     do {
                         System.out.println();
                         System.out.println("1. Imprimir todos os formandos");
-                        System.out.println("2. Dados do formando por nº de matricula");
+                        System.out.println("2. Dados do formando por no de matricula");
                         System.out.println("3. Lista de formandos por curso");
                         System.out.println("4. Imprimir aluno mais velho");
-                        System.out.println("5. Imprimir alunos que estão inscritos em mais de um curso");
+                        System.out.println("5. Imprimir alunos que estao inscritos em mais de um curso");
                         System.out.println("6. Numero total de formandos");
                         System.out.println("7. Exit");
                         System.out.println();
@@ -160,8 +235,10 @@ public class EX10 {
                                 printOldest();
                                 break;
                             case 5:
+                                moreCourses();
                                 break;
                             case 6:
+                                totalNum();
                                 break;
                         }
                     } while(opcao != 7);
