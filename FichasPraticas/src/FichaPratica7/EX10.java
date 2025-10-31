@@ -25,7 +25,7 @@ public class EX10 {
 
     public static void studentDataNo() throws FileNotFoundException {
 
-        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
         Scanner input = new Scanner(System.in);
@@ -55,7 +55,7 @@ public class EX10 {
 
     public static void courseData() throws FileNotFoundException {
 
-        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
         Scanner input = new Scanner(System.in);
@@ -87,7 +87,7 @@ public class EX10 {
 
     public static void printOldest() throws FileNotFoundException{
 
-        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
 
@@ -113,7 +113,7 @@ public class EX10 {
     }
 
     public static void moreCourses() throws FileNotFoundException{
-        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
 
@@ -167,7 +167,7 @@ public class EX10 {
     }
 
     public static void totalNum() throws FileNotFoundException{
-        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_10.csv");
 
         Scanner sc = new Scanner(file);
 
@@ -175,19 +175,208 @@ public class EX10 {
             sc.nextLine();
         }
 
-        int counter = 0;
+        int totalStudents = 0;
+        String[] studentNames = new String[100];
+        int[] courseCount = new int[100];
+        int size = 0;
 
-        while(sc.hasNextLine()){
-            sc.nextLine();
-            counter++;
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] fields = line.split(",");
+            String name = fields[0];
+
+            boolean found = false;
+            for (int i = 0; i < size; i++) {
+                if (studentNames[i].equalsIgnoreCase(name)) {
+                    courseCount[i]++;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                studentNames[size] = name;
+                courseCount[size] = 1;
+                size++;
+            }
+
+            totalStudents++;
         }
 
-        System.out.println("Formandos: " + counter);
-        System.out.print("With Duplicates: ");
-        moreCourses();
+        sc.close();
+
+        int duplicates = 0;
+        for (int i = 0; i < size; i++) {
+            if (courseCount[i] > 1) {
+                duplicates++;
+            }
+        }
+
+        System.out.println();
+        System.out.println("Número total de formandos: " + totalStudents);
+        System.out.println("Número de alunos únicos: " + size);
+        System.out.println("Alunos inscritos em mais de um curso: " + duplicates);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void createStudent() throws FileNotFoundException{
+
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.println();
+        System.out.print("Name: ");
+        String name = input.nextLine();
+
+        System.out.print("Numero de matricula: ");
+        int number = input.nextInt();
+        input.nextLine();
+
+        System.out.print("Curso: ");
+        String course = input.nextLine();
+
+        System.out.print("Email: ");
+        String email = input.nextLine();
+
+        System.out.print("Idade: ");
+        int age = input.nextInt();
+
+        File tempFile = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/temp.csv");
+        Scanner sc = new Scanner(file);
+        java.io.PrintWriter printWriter = new java.io.PrintWriter(tempFile);
+
+        while (sc.hasNextLine()) {
+            printWriter.println(sc.nextLine());
+        }
+
+        printWriter.println(name + "," + number + "," + course + "," + email + "," + age);
+
+        sc.close();
+        printWriter.close();
+
+        file.delete();
+        tempFile.renameTo(file);
+
+        System.out.println("Formando criado com sucesso!");
+    }
+
+    public static void editStudent() throws FileNotFoundException{
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_10.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        String [] lines = new String[200];
+        int size = 0;
+
+        while(sc.hasNextLine()){
+            lines[size] = sc.nextLine();
+            size++;
+        }
+
+        sc.close();
+
+        System.out.println("Introduza o numero do formando a editar: ");
+        int number = input.nextInt();
+
+        boolean found = false;
+
+        for (int i = 1; i < size; i++){
+            String [] data = lines[i].split(",");
+            if (Integer.parseInt(data[1]) == number){
+                found = true;
+                System.out.println("Nome: " + data[0]);
+                String name = input.nextLine();
+
+                System.out.print("Novo curso (" + data[2] + "): ");
+                String course = input.nextLine();
+                if (course.equals("")) course = data[2];
+
+                System.out.print("Novo email (" + data[3] + "): ");
+                String email = input.nextLine();
+                if (email.equals("")) email = data[3];
+
+                System.out.print("Nova idade (" + data[4] + "): ");
+                String ageStr = input.nextLine();
+                if (ageStr.equals("")) ageStr = data[4];
+
+                lines[i] = name + "," + data[1] + "," + course + "," + email + "," + ageStr;
+                break;
+            }
+        }
+
+        if(!found) {
+            System.out.println("nao ha");
+            return;
+        }
+
+        File tempFile = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/temp.csv");
+        java.io.PrintStream ps = new java.io.PrintStream(tempFile);
+
+        for (int i = 0; i < size; i++) {
+            ps.println(lines[i]);
+        }
+        ps.close();
+
+        file.delete();
+        tempFile.renameTo(file);
+
+        System.out.println("Ta pronto!");
+    }
+
+    public static void deleteStudent() throws FileNotFoundException {
+
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_01_Alternativa02.txt");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        String[] lines = new String[200];
+        int size = 0;
+
+        while (sc.hasNextLine()) {
+            lines[size] = sc.nextLine();
+            size++;
+        }
+
+        sc.close();
+
+        System.out.print("Introduza o numero do formando a eliminar: ");
+        int number = input.nextInt();
+
+        File tempFile = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/temp.csv");
+        java.io.PrintStream ps = new java.io.PrintStream(tempFile);
+
+        boolean found = false;
+
+        for (int i = 0; i < size; i++) {
+            if (i == 0) {
+                ps.println(lines[i]);
+                continue;
+            }
+
+            String[] data = lines[i].split(",");
+            if (Integer.parseInt(data[1]) == number) {
+                found = true;
+                System.out.println("Formando " + data[0] + " eliminado!");
+                continue;
+            }
+
+            ps.println(lines[i]);
+        }
+
+        ps.close();
+        file.delete();
+        tempFile.renameTo(file);
+
+        if (!found) {
+            System.out.println("Nao encontrado!");
+        } else {
+            System.out.println("Removido!");
+        }
+    }
+
+    static void main(String[] args) throws FileNotFoundException {
 
         Scanner input = new Scanner(System.in);
 
@@ -244,10 +433,13 @@ public class EX10 {
                     } while(opcao != 7);
                     break;
                 case 2:
+                    createStudent();
                     break;
                 case 3:
+                    editStudent();
                     break;
                 case 4:
+                    deleteStudent();
                     break;
                 default:
                     System.out.println("Bye Bye");
