@@ -10,7 +10,7 @@ public class EX11 {
         String [] months = {"Janeiro", "Fevereiro", "Marco", "Abril", "Maio", "Junho",
                             "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
 
-        File file = new File("soft-dev/FichasPraticas/src/FichaPratica7/FichaPratica07/exercicio_11.csv");
+        File file = new File("src/FichaPratica7/FichaPratica07/exercicio_11.csv");
 
         Scanner sc = new Scanner(file);
         Scanner input = new Scanner(System.in);
