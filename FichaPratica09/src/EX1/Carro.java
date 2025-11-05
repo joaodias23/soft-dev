@@ -49,5 +49,42 @@ public class Carro {
         }
     }
 
+    public void corrida(Carro adversario){
+        if(this.potencia > adversario.potencia){
+            System.out.println("Ganha o " + this.marca);
+        }
+
+        if(this.potencia < adversario.potencia){
+            System.out.println("Ganha o " + adversario.marca);
+        }
+
+        if(this.potencia == adversario.potencia){
+            if(this.cilindrada > adversario.cilindrada){
+                System.out.println("Ganha o " + this.marca);
+            }
+
+            if(this.cilindrada < adversario.cilindrada){
+                System.out.println("Ganha o " + adversario.marca);
+            }
+
+            if(this.cilindrada == adversario.cilindrada){
+                if(this.ano > adversario.ano){
+                    System.out.println("Ganha o " + this.marca);
+                }
+
+                if(this.ano < adversario.ano){
+                    System.out.println("Ganha o " + adversario.marca);
+                }
+
+                if(this.ano == adversario.ano){
+                    System.out.println("Olhem empatou, tem carros iguais, parabens.");
+                }
+            }
+        }
+    }
+
+    public void calcularConsumo(float distanciaKm){
+        System.out.println((this.consumoLitros100Km * distanciaKm / 100));
+    }
 
 }

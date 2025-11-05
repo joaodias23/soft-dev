@@ -1,9 +1,12 @@
-package EX10;
+package EX2;
 
 public class ContaBancaria {
     private int iban;
     private String titular;
     private int saldo = 0;
+    private int anoAbertura = 2025;
+    private float margemEmprestimo = 0.5f;
+    private float valorDivida = 0;
 
     public ContaBancaria(int iban, String titular) {
         this.iban = iban;
@@ -40,4 +43,26 @@ public class ContaBancaria {
         }
     }
 
+    public void pedirEmprestimo(float valorPedir){
+        if(this.valorDivida > 0){
+            System.out.println("Tas em divida ze");
+        } else if(this.saldo * margemEmprestimo >= valorPedir && this.valorDivida == 0){
+            this.saldo += valorPedir;
+            this.valorDivida += valorPedir;
+            System.out.println("Tas em divida para connosco. Sucesso.");
+        } else {
+            System.out.println("Assim tambem nao ne");
+        }
+    }
+
+    public void amortizarEmprestimo(float valor){
+        if(this.valorDivida < valor){
+            System.out.println("Valor em excesso");
+        } else if(this.saldo >= valor){
+            this.valorDivida -= valor;
+            System.out.println("Estas safo, por enquanto");
+        } else{
+            System.out.println("Nao tens dinheiro que chegue");
+        }
+    }
 }
