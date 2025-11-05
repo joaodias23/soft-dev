@@ -15,7 +15,7 @@ public class ContaBancaria {
 
     public void exibirDetalhes() {
         System.out.println("\n------------------------ CONTABANCARIA ------------------------");
-        System.out.println("{ " + this.iban + " , " + this.titular + " , " + this.saldo + " }");
+        System.out.println("{ " + this.iban + " , " + this.titular + " , " + this.saldo + " , " + this.anoAbertura + " , " + this.margemEmprestimo + " , " + this.valorDivida + " }");
         System.out.println("-------------------------------------------------------");
     }
 
