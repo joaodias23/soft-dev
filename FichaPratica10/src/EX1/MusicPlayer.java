@@ -6,9 +6,9 @@ public class MusicPlayer {
     private String creator;
     private ArrayList<Musica> programacaoMusical;
 
-    public MusicPlayer(String creator, ArrayList<Musica> programacaoMusical) {
+    public MusicPlayer(String creator) {
         this.creator = creator;
-        this.programacaoMusical = programacaoMusical;
+        this.programacaoMusical =  new ArrayList<Musica>();
     }
 
     public void adicionarMusica(Musica musica){
@@ -31,9 +31,12 @@ public class MusicPlayer {
     }
 
     public void imprimirRelatorio(){
-        for (Musica music : programacaoMusical){
-            int counter = 1;
-            System.out.println("Musica " + counter + ": " + music);
+        int counter = 1;
+        for (int i = 0; i < programacaoMusical.size(); i++){
+            System.out.println("Musica " + (counter) + ": " + programacaoMusical.get(i).getTitle() + " | " +
+                    programacaoMusical.get(i).getGenre() + " | " +
+                    programacaoMusical.get(i).getArtist() + " | " +
+                    programacaoMusical.get(i).getDuration());
             counter++;
         }
     }
