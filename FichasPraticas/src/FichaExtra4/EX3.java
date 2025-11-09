@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class EX3 {
 
+
+
     public static void menu() throws IOException{
 
         Scanner input = new Scanner(System.in);
@@ -51,22 +53,22 @@ public class EX3 {
                                 novoCliente();
                                 break;
                             case 2:
-                                // atualizarCliente();
+                                atualizarCliente();
                                 break;
                             case 3:
-                                // novoTema();
+                                novoTema();
                                 break;
                             case 4:
-                                // novoQuarto();
+                                novoQuarto();
                                 break;
                             case 5:
-                                // novasCredenciais();
+                                novasCredenciais();
                                 break;
                             case 6:
-                                // excluirCredenciais();
+                                excluirCredenciais();
                                 break;
                             case 7:
-                                // novoProduto();
+                                novoProduto();
                                 break;
                         }
                     } while (opcao1 != 8);
@@ -84,13 +86,13 @@ public class EX3 {
 
                         switch (opcao){
                             case 1:
-                                // consultarId();
+                                consultarId();
                                 break;
                             case 2:
-                                // consultarTelemovel();
+                                consultarTelemovel();
                                 break;
                             case 3:
-                                // consultarEmail();
+                                consultarEmail();
                                 break;
                         }
                     } while (opcao != 4);
@@ -207,6 +209,340 @@ public class EX3 {
             }
         }while(opcao != 8);
 
+    }
+
+    public static void consultarEmail() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/clientesHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Email do cliente que deseja consultar: ");
+        String email = input.nextLine();
+        boolean found = false;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+
+            if (array[4].equalsIgnoreCase(email)) {
+                found = true;
+                System.out.println("\n------------------ Cliente Encontrado ------------------");
+                System.out.println("ID: " + array[0]);
+                System.out.println("Nome: " + array[1]);
+                System.out.println("Data de Nascimento: " + array[2]);
+                System.out.println("Telemóvel: " + array[3]);
+                System.out.println("Email: " + array[4]);
+                System.out.println("----------------- Estilo Mesmo À Vitor -----------------\n");
+                break;
+            }
+        }
+
+        sc.close();
+
+        if (!found) {
+            System.out.println("Não há, amigo");
+        }
+    }
+
+    public static void consultarTelemovel() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/clientesHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Telemóvel do cliente: ");
+        String telemovel = input.nextLine();
+        boolean found = false;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+
+            if (array[3].equals(telemovel)) {
+                found = true;
+                System.out.println("\n------------------ Cliente Encontrado ------------------");
+                System.out.println("ID: " + array[0]);
+                System.out.println("Nome: " + array[1]);
+                System.out.println("Data de Nascimento: " + array[2]);
+                System.out.println("Telemóvel: " + array[3]);
+                System.out.println("Email: " + array[4]);
+                System.out.println("----------------- Estilo Mesmo À Vitor -----------------\n");
+                break;
+            }
+        }
+
+        sc.close();
+
+        if (!found) {
+            System.out.println("Não ten");
+        }
+    }
+
+    public static void consultarId() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/clientesHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("ID do customer (ex: c-0001): ");
+        String id = input.nextLine();
+        boolean found = false;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+
+            if (array[0].equalsIgnoreCase(id)) {
+                found = true;
+                System.out.println("\n------------------ Cliente Encontrado ------------------");
+                System.out.println("ID: " + array[0]);
+                System.out.println("Nome: " + array[1]);
+                System.out.println("Data de Nascimento: " + array[2]);
+                System.out.println("Telemóvel: " + array[3]);
+                System.out.println("Email: " + array[4]);
+                System.out.println("----------------- Estilo Mesmo À Vitor -----------------\n");
+                break;
+            }
+        }
+
+        sc.close();
+
+        if (!found) {
+            System.out.println("Não encontrei");
+        }
+    }
+
+    public static void novoProduto() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/produtosHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        int lastId = 0;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] arrayLine = line.split(";");
+            String[] idArray = arrayLine[0].split("-");
+
+            int id = Integer.parseInt(idArray[1]);
+
+            if (id > lastId){
+                lastId = id;
+            }
+        }
+        sc.close();
+
+        System.out.print("Nome do Produto: ");
+        String nome = input.nextLine();
+
+        System.out.print("Preço: ");
+        double preco = input.nextDouble();
+
+        int newId = lastId + 1;
+        String formattedId = String.format("%04d", newId);
+
+        String newLine = "p-" + formattedId + ";" + nome + ";" + preco;
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+        if (file.length() > 0) {
+            bw.newLine();
+        }
+        bw.write(newLine);
+        bw.close();
+
+        System.out.println("Produto adicionado com sucesso!");
+    }
+
+    public static void excluirCredenciais() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/loginHotel.txt");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Introduza o mano que deseja eliminar: ");
+        String utilizador = input.nextLine();
+
+        String fileContent = "";
+        boolean found = false;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+
+            if (!array[0].equalsIgnoreCase(utilizador)) {
+                if (!fileContent.isEmpty()) {
+                    fileContent += System.lineSeparator();
+                }
+                fileContent += line;
+            } else {
+                found = true;
+            }
+        }
+
+        sc.close();
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file, false));
+        bw.write(fileContent);
+        bw.close();
+
+        System.out.println("Mano " + utilizador + " eliminado com sucesso!");
+    }
+
+    public static void novasCredenciais() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/loginHotel.txt");
+
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("User: ");
+        String utilizador = input.nextLine();
+
+        System.out.print("Password: ");
+        String password = input.nextLine();
+
+        String newLine = utilizador + ";" + password;
+
+        PrintWriter pw = new PrintWriter(new FileWriter(file, true));
+        BufferedWriter bw = new BufferedWriter(pw);
+        if (file.length() > 0) {
+            bw.newLine();
+        }
+        bw.write(newLine);
+        bw.close();
+
+        System.out.println("Credenciais adicionadas com sucesso!");
+    }
+
+    public static void novoQuarto() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/quartosHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        int lastId = 0;
+
+        while(sc.hasNextLine()){
+            String line = sc.nextLine();
+            String [] arrayLine = line.split(";");
+            if(Integer.parseInt(arrayLine[0]) > lastId){
+                lastId = Integer.parseInt(arrayLine[0]);
+            }
+        }
+        sc.close();
+
+        int newRoomNumber = lastId + 1;
+
+        System.out.print("Tema do Quarto (t-0n): ");
+        String temaId = input.nextLine();
+
+        System.out.print("Tipo de Quarto (SINGLE/DOUBLE/SUITE): ");
+        String tipo = input.nextLine().toUpperCase();
+
+        String newLine = newRoomNumber + ";" + temaId + ";" + tipo;
+
+        PrintWriter pw = new PrintWriter(new FileWriter(file, true));
+        BufferedWriter bw = new BufferedWriter(pw);
+        if (file.length() > 0) {
+            bw.newLine();
+        }
+        bw.write(newLine);
+        bw.close();
+
+        System.out.println("Quarto adicionado com sucesso!");
+    }
+
+    public static void novoTema() throws IOException {
+
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/temasHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        int lastId = 0;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String [] arrayLine = line.split(";");
+            String [] array0Line = arrayLine[0].split("-");
+            int id = Integer.parseInt(array0Line[1]);
+            if(id > lastId){
+                lastId = id;
+            }
+        }
+        sc.close();
+
+        System.out.print("Nome do Tema: ");
+        String nome = input.nextLine();
+
+        System.out.print("Preço Multiplicador (n.n): ");
+        double preco = input.nextDouble();
+
+        int newId = lastId + 1;
+        String formattedId = String.format("%02d", newId);
+
+        String newLine = "t-" + formattedId + ";" + nome + ";" + preco;
+
+        PrintWriter pw = new PrintWriter(new FileWriter(file, true));
+        BufferedWriter bw = new BufferedWriter(pw);
+        if (file.length() > 0) {
+            bw.newLine();
+        }
+        bw.write(newLine);
+        bw.close();
+
+        System.out.println("Tema adicionado com sucesso!");
+    }
+
+    public static void atualizarCliente() throws IOException{
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/clientesHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        String fileLine = "";
+        boolean found = false;
+
+        System.out.print("Introduza o ID que procura: ");
+        String id = input.next();
+
+        while(sc.hasNextLine()){
+            String line = sc.nextLine();
+            String [] array = line.split(";");
+
+            if(array[0].equalsIgnoreCase(id)){
+                System.out.println("\nQual quer atualizar?");
+                System.out.println("1. Telemóvel");
+                System.out.println("2. Email");
+                System.out.print("Faxabor: ");
+                int opcao = input.nextInt();
+                input.nextLine();
+
+                if(opcao == 1){
+                    System.out.print("Novo numero: ");
+                    String novoNumero = input.nextLine();
+                    array[3] = novoNumero;
+                } else if (opcao == 2){
+                    System.out.print("Novo email: ");
+                    String novoEmail = input.nextLine();
+                    array[4] = novoEmail;
+                }
+
+                line = String.join(";", array);
+                System.out.println("\nCliente atualizado com sucesso!");
+            }
+            if (!fileLine.isEmpty()) {
+                fileLine += System.lineSeparator();
+            }
+            fileLine += line;
+        }
+
+        sc.close();
+
+        PrintWriter pw = new PrintWriter(new FileWriter(file, false)); // overwrite
+        BufferedWriter bw = new BufferedWriter(pw);
+        bw.write(fileLine);
+        bw.close();
     }
 
     public static void novoCliente() throws IOException {
