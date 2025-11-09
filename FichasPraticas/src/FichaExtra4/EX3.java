@@ -1,46 +1,9 @@
 package FichaExtra4;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.Scanner;
 
 public class EX3 {
-
-    public static void novoCliente() throws IOException {
-        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/clientesHotel.csv");
-
-        Scanner sc = new Scanner(file);
-
-        Scanner input = new Scanner(System.in);
-
-        String lastID = "c-0000";
-
-        while(sc.hasNextLine()){
-            String line = sc.nextLine();
-            if(!line.isEmpty()){
-                lastID = line.split(";")[0];
-            }
-        }
-
-        String numeroString = lastID.substring(2);
-        int newNumber = Integer.parseInt(numeroString) + 1;
-        String newID = "c-" + String.format("%04d", newNumber);
-
-        PrintWriter pw = new PrintWriter(new java.io.FileWriter(file, true));
-        System.out.print("Nome: ");
-        String nome = input.nextLine();
-        System.out.print("Data de Nascimento (dd:mm:aaaa): ");
-        String data = input.nextLine();
-        System.out.print("Telemovel: ");
-        String tele = input.nextLine();
-        System.out.print("Email: ");
-        String email = input.nextLine();
-
-        pw.printf("%s;%s;%s;%s;%s;%n", newID, nome, data, tele, email);
-        System.out.println("Cliente Adicionado Com Sucesso!");
-    }
 
     public static void menu() throws IOException{
 
@@ -244,6 +207,50 @@ public class EX3 {
             }
         }while(opcao != 8);
 
+    }
+
+    public static void novoCliente() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/clientesHotel.csv");
+
+        Scanner sc = new Scanner(file);
+
+        Scanner input = new Scanner(System.in);
+
+        int lastId = 0;
+
+        while(sc.hasNextLine()){
+            String line = sc.nextLine();
+            String [] arrayLine = line.split(";");
+            String [] array0Line = arrayLine[0].split("-");
+            int id = Integer.parseInt(array0Line[1]);
+            if(id > lastId){
+                lastId = id;
+            }
+        }
+        sc.close();
+
+        System.out.print("Nome: ");
+        String nome = input.nextLine();
+        System.out.print("Data de Nascimento (dd-mm-aaaa): ");
+        String data = input.next();
+        System.out.print("Telemovel: ");
+        String telemovel = input.next();
+        System.out.print("Email: ");
+        String email = input.next();
+
+        int newId = lastId + 1;
+        String formattedId = String.format("%04d", newId);
+        String newLine = "c-" + formattedId + ";" + nome + ";" + telemovel + ";" + email;
+
+        PrintWriter pw = new PrintWriter(new FileWriter(file, true));
+        BufferedWriter bw = new BufferedWriter(pw);
+        if (file.length() > 0) {
+            bw.newLine();
+        }
+        bw.write(newLine);
+        bw.close();
+
+        System.out.println("Cliente adicionado com sucesso!");
     }
 
     public static void main(String[] args) throws IOException {
