@@ -110,13 +110,13 @@ public class EX3 {
 
                         switch (opcao){
                             case 1:
-                                // todosQuartos();
+                                todosQuartos();
                                 break;
                             case 2:
-                                // temaQuartos();
+                                temaQuartos();
                                 break;
                             case 3:
-                                // tipoQuartos();
+                                tipoQuartos();
                                 break;
                         }
                     } while (opcao != 4);
@@ -133,16 +133,16 @@ public class EX3 {
 
                         switch (opcao){
                             case 1:
-                                // consultarHistoricoReservas();
+                                consultarHistoricoReservas();
                                 break;
                             case 2:
-                                // consultarReservasAtivas();
+                                consultarReservasAtivas();
                                 break;
                         }
                     } while (opcao != 3);
                     break;
                 case 5:
-                    // registarNovaReserva();
+                    registarNovaReserva();
                     break;
                 case 6:
 
@@ -209,6 +209,220 @@ public class EX3 {
             }
         }while(opcao != 8);
 
+    }
+
+    public static void registarNovaReserva() throws IOException {
+
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/reservasHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("ID do Cliente (c-000n): ");
+        String idCliente = input.nextLine();
+
+        System.out.print("Número do Quarto: ");
+        String numQuarto = input.nextLine();
+
+        System.out.print("Data de Início (dd/mm/yyyy): ");
+        String dataInicio = input.nextLine();
+
+        System.out.print("Data de Fim (dd/mm/yyyy): ");
+        String dataFim = input.nextLine();
+
+        String dataInicioComplete = dataInicio.split("/")[2] + dataInicio.split("/")[1] + dataInicio.split("/")[0];
+        String dataFimComplete = dataFim.split("/")[2] + dataFim.split("/")[1] + dataFim.split("/")[0];
+
+        boolean disponivel = true;
+        int lastId = 0;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+            String idReserva = array[0];
+            String reservaInicio = array[1];
+            String reservaFim = array[2];
+            String reservaQuarto = array[4];
+
+            String numeroIdStr = idReserva.substring(5);
+            int numeroId = Integer.parseInt(numeroIdStr);
+            if (numeroId > lastId) lastId = numeroId;
+
+            String reservaInicioComplete = reservaInicio.split("/")[2] + reservaInicio.split("/")[1] + reservaInicio.split("/")[0];
+            String reservaFimComplete = reservaFim.split("/")[2] + reservaFim.split("/")[1] + reservaFim.split("/")[0];
+
+            if (reservaQuarto.equals(numQuarto)) {
+                if (!(dataFimComplete.compareTo(reservaInicioComplete) < 0 || dataInicioComplete.compareTo(reservaFimComplete) > 0)) {
+                    disponivel = false;
+                    break;
+                }
+            }
+        }
+
+        sc.close();
+
+        if (!disponivel) {
+            System.out.println("Quarto não disponível nesse período. Aquela altura do mês é complicada...");
+            return;
+        }
+
+        int novoIdNum = lastId + 1;
+        String novoId = String.format("r-a%05d", novoIdNum);
+
+        String novaReserva = novoId + ";" + dataInicio + ";" + dataFim + ";" + idCliente + ";" + numQuarto;
+
+        BufferedWriter bw = new BufferedWriter(new FileWriter(file, true));
+        if (file.length() > 0) {
+            bw.newLine();
+        }
+        bw.write(novaReserva);
+        bw.close();
+
+        System.out.println("Reserva registada com sucesso! ID: " + novoId);
+    }
+
+    public static void consultarReservasAtivas() throws IOException {
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/reservasHotel.csv");
+        Scanner sc = new Scanner(file);
+
+        String dataAtual = "20240308";
+
+        System.out.println("\n------------------ Reservas Ativas ------------------");
+
+        boolean found = false;
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+            String[] partesDataFim = array[2].split("/");
+            String dataFim = partesDataFim[2] + partesDataFim[1] + partesDataFim[0];
+
+            if (dataFim.compareTo(dataAtual) > 0) {
+                found = true;
+                System.out.println("Reserva: " + array[0] + " | Inicio: " + array[1] + " | Fim: " + array[2] + " | Cliente: " + array[3] + " | Quarto: " + array[4]);
+            }
+        }
+
+        if (!found) {
+            System.out.println("Não existem reservas ativas, só passivas.");
+        }
+
+        System.out.println("-----------------------------------------------------\n");
+
+        sc.close();
+    }
+
+    public static void consultarHistoricoReservas() throws IOException {
+
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/reservasHotel.csv");
+
+        Scanner sc = new Scanner(file);
+
+        String dataAtual = "20240308";
+
+        System.out.println("\n------------------ Histórico de Reservas ------------------");
+
+        boolean found = false;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+            String[] partesDataFim = array[2].split("/");
+            String dataFim = partesDataFim[2] + partesDataFim[1] + partesDataFim[0];
+
+            if (dataFim.compareTo(dataAtual) < 0) {
+                found = true;
+                System.out.println("Reserva: " + array[0] + " | Inicio: " + array[1] + " | Fim: " + array[2] + " | Cliente: " + array[3] + " | Quarto: " + array[4]);
+            }
+        }
+
+        if (!found) {
+            System.out.println("Não existem reservas históricas, só reservas normais.");
+        }
+
+        System.out.println("-----------------------------------------------------------\n");
+
+        sc.close();
+    }
+
+    public static void tipoQuartos() throws IOException {
+
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/quartosHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("Tipo de quarto (SINGLE, DOUBLE (quartos com casas decimais), SUITE): ");
+        String tipo = input.nextLine();
+
+        System.out.println("\n------------------ Quartos Disponíveis do Tipo " + tipo + " ------------------");
+
+        boolean found = false;
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+
+            if (array[2].equalsIgnoreCase(tipo)) {
+                System.out.println("Quarto: " + array[0] + " | Tema: " + array[1]);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Não existe");
+        }
+
+        System.out.println("--------------------------------------------------------\n");
+        sc.close();
+    }
+
+    public static void temaQuartos() throws IOException {
+
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/quartosHotel.csv");
+
+        Scanner sc = new Scanner(file);
+        Scanner input = new Scanner(System.in);
+
+        System.out.print("ID do tema (t-0n): ");
+        String tema = input.nextLine();
+
+        System.out.println("\n------------------ Quartos do Tema " + tema + " ------------------");
+        boolean found = false;
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+
+            if (array[1].equalsIgnoreCase(tema)) {
+                System.out.println("Quarto: " + array[0] + " | Tipo: " + array[2]);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Não existe");
+        }
+
+        System.out.println("--------------------------------------------------------\n");
+        sc.close();
+    }
+
+    public static void todosQuartos() throws IOException {
+
+        File file = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/quartosHotel.csv");
+
+        Scanner sc = new Scanner(file);
+
+        System.out.println("\n------------------ Quartos Disponíveis ------------------");
+
+        while (sc.hasNextLine()) {
+            String line = sc.nextLine();
+            String[] array = line.split(";");
+
+            System.out.println("Quarto: " + array[0] + " | Tema: " + array[1] + " | Tipo: " + array[2]);
+        }
+
+        System.out.println("--------------------------------------------------------\n");
+        sc.close();
     }
 
     public static void consultarEmail() throws IOException {
