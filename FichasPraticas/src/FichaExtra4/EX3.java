@@ -166,13 +166,13 @@ public class EX3 {
 
                         switch (opcao){
                             case 1:
-                                // receitaTotalAnos();
+                                receitaTotalAnos();
                                 break;
                             case 2:
-                                // despesaTotalAnos();
+                                despesaTotalAnos();
                                 break;
                             case 3:
-                                // lucroAnos();
+                                lucroAnos();
                                 break;
                             case 4:
                                 // melhorCliente();
@@ -209,6 +209,244 @@ public class EX3 {
             }
         }while(opcao != 8);
 
+    }
+
+    public static void lucroAnos() throws IOException {
+
+        File fileReservas = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/reservasHotel.csv");
+        File fileQuartos = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/quartosHotel.csv");
+
+        Scanner sc = new Scanner(fileReservas);
+        Scanner scQ;
+
+        double[] receitaAno = new double[3000];
+        double[] despesaAno = new double[3000];
+
+        double precoSingle = 95;
+        double precoDouble = 110;
+        double precoSuite = 250;
+
+        double limpezaDia = 17.5;
+        double luzAguaDia = 12.75;
+        double adminDia = 7.25;
+
+        while (sc.hasNextLine()) {
+            String[] array = sc.nextLine().split(";");
+
+            String numQuarto = array[0];
+            String dataInicio = array[1];
+            String dataFim = array[2];
+
+            int year1 = Integer.parseInt(dataInicio.split("/")[2]);
+            int mes1 = Integer.parseInt(dataInicio.split("/")[1]);
+            int day1 = Integer.parseInt(dataInicio.split("/")[0]);
+
+            int year2 = Integer.parseInt(dataFim.split("/")[2]);
+            int mes2 = Integer.parseInt(dataFim.split("/")[1]);
+            int day2 = Integer.parseInt(dataFim.split("/")[0]);
+
+            int noites = (year2 - year1) * 360 + (mes2 - mes1) * 30 + (day2 - day1);
+
+            scQ = new Scanner(fileQuartos);
+            String tipo = "";
+
+            while (scQ.hasNextLine()) {
+                String[] q = scQ.nextLine().split(";");
+
+                if (q[0].equals(numQuarto)) {
+                    tipo = q[2];
+                    break;
+                }
+            }
+            scQ.close();
+
+            double precoNoite = 0;
+
+            if (tipo.equalsIgnoreCase("SINGLE")){
+                precoNoite = precoSingle;
+            }
+            else if (tipo.equalsIgnoreCase("DOUBLE")){
+                precoNoite = precoDouble;
+            }
+            else if (tipo.equalsIgnoreCase("SUITE")){
+                precoNoite = precoSuite;
+            }
+
+            double receita = noites * precoNoite;
+
+            double despesa = noites * (limpezaDia + luzAguaDia + adminDia);
+
+            receitaAno[year1] += receita;
+            despesaAno[year1] += despesa;
+        }
+
+        sc.close();
+
+        System.out.println("\n---------------- LUCRO POR ANOS ----------------");
+        for (int ano = 2000; ano < 2100; ano++) {
+            if (receitaAno[ano] > 0) {
+                double lucro = receitaAno[ano] - despesaAno[ano];
+                System.out.printf("%d: %.2f€\n", ano, lucro);
+            }
+        }
+        System.out.println("------------------------------------------------\n");
+    }
+
+    public static void despesaTotalAnos() throws IOException {
+
+        File fileReservas = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/reservasHotel.csv");
+
+        Scanner sc = new Scanner(fileReservas);
+
+        double[] limpezaAno = new double[3000];
+        double[] luzAguaAno = new double[3000];
+        double[] adminAno = new double[3000];
+        double[] totalAno = new double[3000];
+
+        double limpezaDia = 17.5;
+        double luzAguaDia = 12.75;
+        double adminDia = 7.25;
+
+        while (sc.hasNextLine()) {
+            String[] array = sc.nextLine().split(";");
+
+            String dataInicio = array[1];
+            String dataFim = array[2];
+
+            int year1 = Integer.parseInt(dataInicio.split("/")[2]);
+            int mes1 = Integer.parseInt(dataInicio.split("/")[1]);
+            int day1 = Integer.parseInt(dataInicio.split("/")[0]);
+
+            int year2 = Integer.parseInt(dataFim.split("/")[2]);
+            int mes2 = Integer.parseInt(dataFim.split("/")[1]);
+            int day2 = Integer.parseInt(dataFim.split("/")[0]);
+
+            int noites = (year2 - year1) * 360 + (mes2 - mes1) * 30 + (day2 - day1);
+
+            double custoLimpeza = noites * limpezaDia;
+            double custoLuzAgua = noites * luzAguaDia;
+            double custoAdmin = noites * adminDia;
+            double custoTotal = custoLimpeza + custoLuzAgua + custoAdmin;
+
+            limpezaAno[year1] += custoLimpeza;
+            luzAguaAno[year1] += custoLuzAgua;
+            adminAno[year1] += custoAdmin;
+            totalAno[year1] += custoTotal;
+        }
+
+        sc.close();
+
+        System.out.println("\n------------- DESPESA TOTAL POR ANOS -------------");
+        for (int ano = 2000; ano < 2100; ano++) {
+            if (totalAno[ano] > 0) {
+                System.out.printf("\n%d:\n", ano);
+                System.out.printf("    Limpeza: %.2f€\n", limpezaAno[ano]);
+                System.out.printf("    Despesas Luz/Água: %.2f€\n", luzAguaAno[ano]);
+                System.out.printf("    Custos Administrativos: %.2f€\n", adminAno[ano]);
+                System.out.printf("    Total: %.2f€\n", totalAno[ano]);
+            }
+        }
+        System.out.println("--------------------------------------------------\n");
+    }
+
+    public static void receitaTotalAnos() throws IOException {
+
+        File fileReservas = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/reservasHotel.csv");
+        File fileQuartos = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/quartosHotel.csv");
+        File fileTemas = new File("github.com/soft-dev/FichasPraticas/src/FichaExtra4/FichaPraticaExtraFicheiros/Ex_03 Hotel Temático/temasHotel.csv");
+
+        Scanner sc = new Scanner(fileReservas);
+
+        double precoSingle = 95;
+        double precoDouble = 110;
+        double precoSuite  = 250;
+
+        double despesas = 17.5 + 12.75 + 7.25;
+
+        double[] totalAno = new double[20];
+
+        while (sc.hasNextLine()) {
+
+            String linha = sc.nextLine();
+
+            String[] array = linha.split(";");
+
+            String dataInicio = array[1];
+            String dataFim    = array[2];
+            String idCliente  = array[3];
+            String numQuarto  = array[4];
+
+            int anoInicio = Integer.parseInt(dataInicio.split("/")[2]);
+
+            int dia1 = Integer.parseInt(dataInicio.split("/")[0]);
+            int mes1 = Integer.parseInt(dataInicio.split("/")[1]);
+            int ano1 = Integer.parseInt(dataInicio.split("/")[2]);
+
+            int dia2 = Integer.parseInt(dataFim.split("/")[0]);
+            int mes2 = Integer.parseInt(dataFim.split("/")[1]);
+            int ano2 = Integer.parseInt(dataFim.split("/")[2]);
+
+            int noites = (ano2 - ano1) * 360 + (mes2 - mes1) * 30 + (dia2 - dia1);
+
+            Scanner scQuartos = new Scanner(fileQuartos);
+            String tipo = "";
+            String tema = "";
+
+            while (scQuartos.hasNextLine()) {
+
+                String quaLine = scQuartos.nextLine();
+                String[] qua = quaLine.split(";");
+
+                if (qua[0].equals(numQuarto)) {
+                    tema = qua[1];
+                    tipo = qua[2];
+                    break;
+                }
+            }
+            scQuartos.close();
+
+            Scanner scTemas = new Scanner(fileTemas);
+            double multiplicador = 1.0;
+
+            while (scTemas.hasNextLine()) {
+                String tLine = scTemas.nextLine();
+                String[] t = tLine.split(";");
+
+                if (t[0].equals(tema)) {
+                    multiplicador = Double.parseDouble(t[2]);
+                    break;
+                }
+            }
+            scTemas.close();
+
+            double precoBase = 0;
+
+            if (tipo.equalsIgnoreCase("SINGLE")){
+                precoBase = precoSingle;
+            }
+            if (tipo.equalsIgnoreCase("DOUBLE")){
+                precoBase = precoDouble;
+            }
+            if (tipo.equalsIgnoreCase("SUITE")){
+                precoBase = precoSuite;
+            }
+
+            double lucro = (precoBase * multiplicador - despesas) * noites;
+
+            totalAno[anoInicio - 2020] += lucro;
+        }
+
+        sc.close();
+
+        System.out.println("\n---------- RECEITA TOTAL POR ANO ----------");
+
+        for (int i = 0; i < totalAno.length; i++) {
+            if (totalAno[i] != 0) {
+                System.out.printf("%d: %.2f€\n", 2020 + i, totalAno[i]);
+            }
+        }
+
+        System.out.println("-------------------------------------------\n");
     }
 
     public static void registarNovaReserva() throws IOException {
