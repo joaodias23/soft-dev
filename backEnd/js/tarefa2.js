@@ -34,3 +34,4 @@ function gerarLista(estudantes){
     newList = estudantes.map( (estudantes) => `${estudantes.nome} tem a nota ${estudantes.nota}`);
     console.log(newList);
 }
+
