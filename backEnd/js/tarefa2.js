@@ -35,3 +35,41 @@ function gerarLista(estudantes){
     console.log(newList);
 }
 
+function sortArray(estudantes){
+    newListSorted = estudantes.sort( (alunoA, alunoB) => alunoA.nota - alunoB.nota);
+    console.log(newListSorted);
+}
+
+// ==========================================================================================================================================================================
+
+seconds =   10;
+secondsNovo = 10;
+let intervalo;
+
+function timeDown(){
+    intervalo = setInterval(() => {
+            console.log(seconds);
+            seconds--;
+
+        if (seconds < 0){
+            clearInterval(intervalo);
+        }
+
+        }, 1000)
+}
+
+function pauseTime(){
+    clearInterval(intervalo);
+}
+
+function timeReset(){
+    intervaloNovo = setInterval(() => {
+            console.log(secondsNovo);
+            secondsNovo--;
+
+        if (secondsNovo < 0){
+            clearInterval(intervaloNovo);
+        }
+
+        }, 1000)
+}
