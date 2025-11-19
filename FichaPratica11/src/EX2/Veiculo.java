@@ -1,5 +1,7 @@
 package EX2;
 
+import EX2.Enums.TipoCombustivel;
+
 public class Veiculo {
     protected String marca;
     protected String modelo;
@@ -83,7 +85,7 @@ public class Veiculo {
         }
     }
 
-    public void calcularConsumo(float distanciaKm){
-        System.out.println((this.consumoLitros100Km * distanciaKm / 100));
+    public double calcularConsumo(float distanciaKm){
+        return this.consumoLitros100Km * distanciaKm / 100;
     }
 }
