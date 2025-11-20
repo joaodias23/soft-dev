@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+<meta charset="UTF-8">
+<title>Loja Galáctica</title>
+
+<style>
+/* RESET */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* BACKGROUND + MAIN LAYOUT */
+html, body {
+    height: 100vh;
+    overflow: hidden;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(to bottom, #0b0b2b, #1b2735 70%, #090a0f);
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+/* DARK MODE — UI ONLY */
+body.dark-mode .product-card,
+body.dark-mode .cart {
+    background: rgba(0,0,0,0.55) !important;
+    border-color: #ffffff20 !important;
+}
+
+body.dark-mode .cart-total,
+body.dark-mode .product-title,
+body.dark-mode .product-price {
+    color: #ffffff;
+}
+
+body.dark-mode button {
+    background: rgba(255,255,255,0.25);
+}
+
+/* STARFIELD */
+.stars {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    background: white;
+    box-shadow: 2vw 5vh 2px white, 10vw 8vh 2px white, 15vw 15vh 1px white,
+        22vw 22vh 1px white, 28vw 12vh 2px white, 32vw 32vh 1px white,
+        38vw 18vh 2px white, 42vw 35vh 1px white, 48vw 25vh 2px white,
+        53vw 42vh 1px white, 58vw 15vh 2px white, 63vw 38vh 1px white,
+        68vw 28vh 2px white, 73vw 45vh 1px white, 78vw 32vh 2px white,
+        83vw 48vh 1px white, 88vw 20vh 2px white, 93vw 52vh 1px white,
+        98vw 35vh 2px white, 5vw 60vh 1px white, 12vw 65vh 2px white,
+        18vw 72vh 1px white, 25vw 78vh 2px white, 30vw 85vh 1px white;
+    animation: twinkle 8s infinite linear;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.8; }
+    50% { opacity: 0.4; }
+}
+
+/* SHOOTING STARS */
+.shooting-star {
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, white, transparent);
+    animation: shoot 3s infinite ease-in;
+}
+
+.shooting-star:nth-child(2) { top: 20%; left: -100px; animation-delay: 0s; }
+.shooting-star:nth-child(3) { top: 40%; left: -100px; animation-delay: 1s; }
+.shooting-star:nth-child(4) { top: 60%; left: -100px; animation-delay: 2s; }
+.shooting-star:nth-child(5) { top: 80%; left: -100px; animation-delay: 3s; }
+
+@keyframes shoot {
+    0% { transform: translateX(0) translateY(0) rotate(25deg); opacity: 1; }
+    100% { transform: translateX(120vw) translateY(50vh) rotate(25deg); opacity: 0; }
+}
+
+/* HEADER */
+header {
+    padding: 15px;
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    text-shadow: 0 0 15px white;
+}
+
+/* DARK MODE BUTTON */
+#toggle-theme {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    padding: 8px 16px;
+    border-radius: 10px;
+    border: 1px solid #ffffff60;
+    background-color: rgba(255,255,255,0.15);
+    color: white;
+    cursor: pointer;
+    box-shadow: 0 0 8px #ffffff40;
+}
+#toggle-theme:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* MAIN SHOP LAYOUT */
+.shop-container {
+    flex:1;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 15px;
+    padding: 20px;
+    overflow: hidden;
+}
+
+/* PRODUCTS */
+.products {
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+.product-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid #ffffff40;
+    border-radius: 15px;
+    padding: 10px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    backdrop-filter: blur(3px);
+    transition: 0.3s;
+}
+
+.product-card.added {
+    background: rgba(0,255,0,0.25) !important;
+    border-color: #2ecc71 !important;
+}
+
+.product-card img {
+    width: 90px;
+    height: 90px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid #ffffff20;
+}
+
+.product-title {
+    font-size: 18px;
+    margin-bottom: 4px;
+}
+
+.product-price {
+    font-size: 16px;
+    opacity: 0.8;
+}
+
+/* BUTTONS */
+button {
+    border: 1px solid #ffffff60;
+    background: rgba(255,255,255,0.15);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 0 10px #ffffff30;
+}
+
+button:hover {
+    background: rgba(255,255,255,0.35);
+}
+
+/* CART */
+.cart {
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid #ffffff40;
+    border-radius: 15px;
+    padding: 15px;
+    overflow-y: auto;
+    backdrop-filter: blur(3px);
+}
+
+.cart h2 {
+    text-align: center;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px white;
+}
+
+.cart-item {
+    border-bottom: 1px solid #ffffff40;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.remove-btn {
+    padding: 5px 10px;
+    background: #d63031;
+    border-radius: 8px;
+    cursor: pointer;
+}
+.remove-btn:hover {
+    background: #ff7675;
+}
+
+.cart-total {
+    margin-top: 10px;
+    font-size: 20px;
+    text-align: right;
+}
+
+@media (max-width: 900px) {
+    .shop-container {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<button id="toggle-theme">Modo nocturno</button>
+
+<div class="stars"></div>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+<div class="shooting-star"></div>
+
+<header>🌌 Loja Ronáldica</header>
+
+<div class="shop-container">
+
+    <!-- PRODUCTS -->
+    <section class="products">
+
+        <div class="product-card" data-id="1" data-name="Água Papai Cris" data-price="29.99">
+            <img src="https://media.tenor.com/NF6ixwAmrTMAAAAM/cristiano-ronaldo-drinking.gif">
+            <div>
+                <div class="product-title">Água Papai Cris</div>
+                <div class="product-price">€29.99</div>
+            </div>
+            <button class="add-btn">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="product-card" data-id="2" data-name="Shampoo Papai Cris" data-price="69.99">
+            <img src="https://gifdb.com/images/high/ronaldo-498-x-498-gif-fdxl1fi0jcbkhex8.gif">
+            <div>
+                <div class="product-title">Shampoo Papai Cris</div>
+                <div class="product-price">€69.99</div>
+            </div>
+            <button class="add-btn">Adicionar ao Carrinho</button>
+        </div>
+
+        <div class="product-card" data-id="3" data-name="Papel Higiénico Papai Cris" data-price="79.99">
+            <img src="https://media1.tenor.com/m/NUeQ4SLh440AAAAC/saudi-league-al-shabab.gif">
+            <div>
+                <div class="product-title">Papel Higiénico Papai Cris</div>
+                <div class="product-price">€79.99</div>
+            </div>
+            <button class="add-btn">Adicionar ao Carrinho</button>
+        </div>
+
+    </section>
+
+    <!-- CART -->
+    <aside class="cart">
+        <h2>Carrinho</h2>
+
+        <div id="cart-items"></div>
+
+        <div class="cart-total">Total: €<span id="cart-total">0.00</span></div>
+
+    </aside>
+</div>
+
+<!-- ========================================= -->
+<!-- =============== JAVASCRIPT =============== -->
+<!-- ========================================= -->
+<script>
+const cart = {};
+const cartItemsDiv = document.getElementById("cart-items");
+const cartTotalSpan = document.getElementById("cart-total");
+
+function updateCart() {
+    cartItemsDiv.innerHTML = "";
+    let total = 0;
+
+    Object.values(cart).forEach(item => {
+        const row = document.createElement("div");
+        row.className = "cart-item";
+
+        total += item.price * item.qty;
+
+        row.innerHTML = `
+            <span>${item.name} x${item.qty}</span>
+            <span>€${(item.price * item.qty).toFixed(2)}</span>
+            <button class="remove-btn" data-id="${item.id}">Remover</button>
+        `;
+
+        cartItemsDiv.appendChild(row);
+    });
+
+    cartTotalSpan.textContent = total.toFixed(2);
+}
+
+document.querySelectorAll(".add-btn").forEach(btn => {
+    btn.addEventListener("click", e => {
+        const card = e.target.closest(".product-card");
+        const id = card.dataset.id;
+        const name = card.dataset.name;
+        const price = parseFloat(card.dataset.price);
+
+        if (!cart[id]) {
+            cart[id] = { id, name, price, qty: 1 };
+            card.classList.add("added");
+        } else {
+            cart[id].qty++;
+        }
+
+        updateCart();
+    });
+});
+
+cartItemsDiv.addEventListener("click", e => {
+    if (e.target.classList.contains("remove-btn")) {
+        const id = e.target.dataset.id;
+        delete cart[id];
+
+        document.querySelector(`.product-card[data-id="${id}"]`).classList.remove("added");
+
+        updateCart();
+    }
+});
+
+document.getElementById("toggle-theme").addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+});
+</script>
+
+</body>
+</html>
