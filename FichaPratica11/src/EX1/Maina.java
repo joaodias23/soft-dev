@@ -6,7 +6,7 @@ import EX1.Enums.Armas;
 import EX1.Enums.Categoria;
 import EX1.Enums.Instalacoes;
 
-public class Main {
+public class Maina {
     public static void main(String[] args) {
 
         JatoParticular jatao = new JatoParticular(24, "Abioum", 1993, 15.0, 20.0, 16.5, 19.4, 3, 400, 700, 17000, 8, 49, Categoria.LIGHT_JET);

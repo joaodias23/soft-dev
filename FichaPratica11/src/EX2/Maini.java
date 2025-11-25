@@ -5,7 +5,7 @@ import EX2.Veiculos.Camiao;
 import EX2.Veiculos.Carro;
 import EX2.Veiculos.Mota;
 
-public class Main {
+public class Maini {
     public static void main(String[] args) {
         Carro carro = new Carro("Toyota", "Corolla", "Preto", 2020, 120, 1600, TipoCombustivel.GASOLINA, 6.5f, 5);
         Mota mota = new Mota("Yamaha", "MT-07", "Azul", 2021, 75, 689, TipoCombustivel.GPL, 4.3f);

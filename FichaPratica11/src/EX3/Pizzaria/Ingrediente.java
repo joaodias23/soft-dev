@@ -1,6 +1,6 @@
-package EX3;
+package EX3.Pizzaria;
 
-import Pizzaria.Enums.UnidadeMedida;
+import EX3.Enums.UnidadeMedida;
 
 public class Ingrediente {
     protected int codigo;
