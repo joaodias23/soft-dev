@@ -1,4 +1,4 @@
-//  LOJA RONÁLDICA
+// ################################################################### LOJA RONÁLDICA ###################################################################
 
 const addButtons = document.querySelectorAll(".add-btn");
 const cartItemsDiv = document.getElementById("cart-items");
@@ -8,24 +8,21 @@ const toggleThemeBtn = document.getElementById("toggle-theme");
 let cart = [];
 let total = 0;
 
-addButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-        const card = btn.closest(".product-card");
+function addToCart(card) {
+    const id = card.dataset.id;
+    const name = card.dataset.name;
+    const price = parseFloat(card.dataset.price);
 
-        const id = card.dataset.id;
-        const name = card.dataset.name;
-        const price = parseFloat(card.dataset.price);
+    cart.push({ id: id, name: name, price: price });
+    total += price;
 
-        cart.push({ id, name, price });
+    card.classList.add("added");
+    setTimeout(function() {
+        card.classList.remove("added");
+    }, 800);
 
-        total += price;
-
-        card.classList.add("added");
-        setTimeout(() => card.classList.remove("added"), 800);
-
-        atualizarCarrinho();
-    });
-});
+    atualizarCarrinho();
+}
 
 function removerItem(index) {
     total -= cart[index].price;
@@ -36,28 +33,35 @@ function removerItem(index) {
 function atualizarCarrinho() {
     cartItemsDiv.innerHTML = "";
 
-    cart.forEach((item, index) => {
-        const div = document.createElement("div");
+    for (let i = 0; i < cart.length; i++) {
+        let item = cart[i];
+
+        let div = document.createElement("div");
         div.className = "cart-item";
 
-        div.innerHTML = `
-            <span>${item.name} — €${item.price.toFixed(2)}</span>
-            <button class="remove-btn" onclick="removerItem(${index})">Remover</button>
-        `;
+        div.innerHTML = '<span>' + item.name + ' — €' + item.price.toFixed(2) + '</span>' +
+                        '<button class="remove-btn" onclick="removerItem(' + i + ')">Remover</button>';
 
         cartItemsDiv.appendChild(div);
-    });
+    }
 
     cartTotalSpan.textContent = total.toFixed(2);
 }
 
-toggleThemeBtn.addEventListener("click", () => {
+for (let i = 0; i < addButtons.length; i++) {
+    addButtons[i].addEventListener("click", function() {
+        let card = addButtons[i].closest(".product-card");
+        addToCart(card);
+    });
+}
+
+toggleThemeBtn.addEventListener("click", function() {
     document.body.classList.toggle("dark-mode");
 });
 
-// ==========================================================================================================================================================================
+// ###################################################################################################################################################
 
-// QUIZ DO PAPAI CRIS
+// ################################################################### QUIZ DO PAPAI CRIS ###################################################################
 
 const questions = [
     {
@@ -92,7 +96,7 @@ const questions = [
     }
 ];
 
-let current = 0;
+let currentQuestion = 0;
 let score = 0;
 
 const questionEl = document.getElementById("question");
@@ -101,27 +105,31 @@ const scoreEl = document.getElementById("score");
 const restartBtn = document.getElementById("restart");
 
 function showQuestion() {
-    const q = questions[current];
+    let q = questions[currentQuestion];
 
     questionEl.textContent = q.question;
     optionsEl.innerHTML = "";
 
-    q.options.forEach((opt, index) => {
-        const btn = document.createElement("button");
-        btn.textContent = opt;
+    for (let i = 0; i < q.options.length; i++) {
+        let btn = document.createElement("button");
+        btn.textContent = q.options[i];
         btn.className = "option";
 
-        btn.addEventListener("click", () => checkAnswer(btn, index));
+        btn.addEventListener("click", function() {
+            checkAnswer(btn, i);
+        });
 
         optionsEl.appendChild(btn);
-    });
+    }
 }
 
 function checkAnswer(button, index) {
-    const q = questions[current];
+    let q = questions[currentQuestion];
 
-    const allButtons = document.querySelectorAll(".option");
-    allButtons.forEach(b => b.disabled = true);
+    let allButtons = document.querySelectorAll(".option");
+    for (let i = 0; i < allButtons.length; i++) {
+        allButtons[i].disabled = true;
+    }
 
     if (index === q.correct) {
         button.style.background = "green";
@@ -130,10 +138,10 @@ function checkAnswer(button, index) {
         button.style.background = "red";
     }
 
-    setTimeout(() => {
-        current++;
+    setTimeout(function() {
+        currentQuestion++;
 
-        if (current < questions.length) {
+        if (currentQuestion < questions.length) {
             showQuestion();
         } else {
             showScore();
@@ -142,15 +150,15 @@ function checkAnswer(button, index) {
 }
 
 function showScore() {
-    questionEl.textContent = "Quiz terminado!";
+    questionEl.textContent = "Cabou!";
     optionsEl.innerHTML = "";
-    scoreEl.textContent = `Pontuação final: ${score} / ${questions.length}`;
+    scoreEl.textContent = "Pontuação final: " + score + " / " + questions.length;
 
     restartBtn.style.display = "block";
 }
 
-restartBtn.addEventListener("click", () => {
-    current = 0;
+restartBtn.addEventListener("click", function() {
+    currentQuestion = 0;
     score = 0;
     scoreEl.textContent = "";
     restartBtn.style.display = "none";

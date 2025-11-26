@@ -31,7 +31,7 @@ public class Pizza {
     }
 
     public void editQuantity(Ingrediente ingrediente, double quantidade) {
-        ingrediente.setQuantidade(quantidade);
+        return;
     }
 
     @Override
