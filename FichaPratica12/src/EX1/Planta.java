@@ -15,4 +15,8 @@ public class Planta extends SerVivo{
     public Familia getFamilia() {
         return familia;
     }
+
+    public int getGrauDefesa() {
+        return grauDefesa;
+    }
 }

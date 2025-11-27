@@ -7,4 +7,8 @@ public class Insecto extends SerVivo{
         super(nome, especie, pais, idade);
         this.venenoso = venenoso;
     }
+
+    public boolean isVenenoso() {
+        return venenoso;
+    }
 }
