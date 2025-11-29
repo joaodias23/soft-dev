@@ -8,4 +8,16 @@ public class IngredientePizza {
         this.ingrediente = ingrediente;
         this.quantidade = quantidade;
     }
+
+    public Ingrediente getIngrediente() {
+        return ingrediente;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
 }
