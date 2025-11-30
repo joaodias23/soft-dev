@@ -5,7 +5,7 @@ import EX3.Enums.Tamanho;
 import java.util.ArrayList;
 
 public class Pizza {
-    private final int MAX_INGREDIENTES = 5;
+    private final int MAX_INGREDIENTES = 4;
     private int codigo;
     private String nome;
     private String descriçao;
@@ -23,10 +23,41 @@ public class Pizza {
     }
 
     public void addIngrediente(IngredientePizza ingrediente) {
-        if (ingredientes.size() < MAX_INGREDIENTES) {
-            ingredientes.add(ingrediente);
-            System.out.println(ingrediente.getIngrediente().getNome() + " adicionado.");
-        } else System.out.println("Pizza tá cheia");
+        Ingrediente ingre = ingrediente.getIngrediente();
+        boolean temBase = false;
+        int totalToppings = 0;
+
+        for (IngredientePizza ip : ingredientes) {
+            if (ip.getIngrediente() instanceof Base) {
+                temBase = true;
+            }
+            if (ip.getIngrediente() instanceof Topping) {
+                totalToppings++;
+            }
+        }
+
+        if (ingre instanceof Topping && !temBase) {
+            System.out.println("Não podes adicionar toppings sem uma base primeiro nabo!");
+            return;
+        }
+
+        if (ingre instanceof Base && temBase) {
+            System.out.println("A pizza já tem uma base. Não podes adicionar outra nabo.");
+            return;
+        }
+
+        if (ingre instanceof Topping && totalToppings >= MAX_INGREDIENTES) {
+            System.out.println("Já tens 4 toppings. Não podes adicionar mais toppings.");
+            return;
+        }
+
+        if (ingredientes.size() >= MAX_INGREDIENTES) {
+            System.out.println("Pizza tá cheia");
+            return;
+        }
+
+        ingredientes.add(ingrediente);
+        System.out.println(ingre.getNome() + " adicionado.");
     }
 
     public void editIngrediente(int idIngrediente, int novaQuantia){
@@ -81,4 +112,49 @@ public class Pizza {
         }
         System.out.println("Total de calorias: " + calcularCalorias());
     }
+
+    public String getTipoPizza() {
+
+        boolean temCarne = false;
+        boolean temFrutoMar = false;
+        boolean temVegetal = false;
+        boolean temOutros = false;
+
+        for (IngredientePizza ip : ingredientes) {
+
+            Ingrediente ing = ip.getIngrediente();
+
+            if (ing instanceof Carne) {
+                temCarne = true;
+            }
+            else if (ing instanceof FrutoMar) {
+                temFrutoMar = true;
+            }
+            else if (ing instanceof Vegetal) {
+                temVegetal = true;
+            }
+            else if (ing instanceof Topping) {
+                temOutros = true;
+            }
+        }
+
+        if (temCarne && !temFrutoMar && !temVegetal && !temOutros) {
+            return "Pizza de Carne";
+        }
+
+        if (temFrutoMar && !temCarne && !temVegetal && !temOutros) {
+            return "Pizza do Mar";
+        }
+
+        if (temVegetal && !temCarne && !temFrutoMar && !temOutros) {
+            return "Pizza Vegetariana";
+        }
+
+        if (temCarne && temFrutoMar && temVegetal) {
+            return "Pizza De Tudo";
+        }
+
+        return "Pizza Com 4 Quartos";
+    }
+
 }

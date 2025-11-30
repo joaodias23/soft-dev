@@ -7,8 +7,8 @@ public class Base extends Ingrediente{
     private BasePizza tipoBase;
     private String descricao;
 
-    public Base(int codigo, String nome, UnidadeMedida unidadeMedida, double calorias, BasePizza tipoBase, String descricao) {
-        super(codigo, nome, unidadeMedida, calorias);
+    public Base(int codigo, String nome, double calorias, BasePizza tipoBase, String descricao) {
+        super(codigo, nome, UnidadeMedida.GRAMAS, calorias);
         this.tipoBase = tipoBase;
         this.descricao = descricao;
     }
